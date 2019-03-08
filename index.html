@@ -1,0 +1,38 @@
+<form class="uploadImage" enctype="multipart/form-data">
+    <input type="text" id="title">
+    <input type="file" name="imagename" onchange="select_file(event)"id="imagename">
+    <input type="text" name="username" />
+    <input type="text" name="password" />
+    <input type="button" name="submit" onclick="upload()" value="Submit">
+</form>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script>
+    let url = "http://localhost:5000/add";
+    let filesToUpload;    
+    function select_file(e){
+    
+        filesToUpload = e.target.files[0];
+    }
+
+    function upload() {
+        const formData = new FormData();
+        formData.append('sriram',filesToUpload);
+            $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res, err) {
+                if (res) {
+                    img = res;
+                    console.log(res, "myres2");
+                }
+                if (err) {
+                    console.log(err, "myerr2");
+                }
+            }
+        })
+    }        
+</script>
