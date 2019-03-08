@@ -1,0 +1,97 @@
+<form class="uploadImage" enctype="multipart/form-data">
+    <input type="text" id="title">
+    <input type="file" name="imagename" onchange="select_file(event)"id="imagename">
+    <input type="text" name="username" />
+    <input type="text" name="password" />
+    <input type="button" name="submit" onclick="upload()" value="Submit">
+</form>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script>
+    let url = "http://localhost:5000/add";
+    let filesToUpload;
+    
+    function select_file(e){
+    
+        filesToUpload = e.target.files[0];
+    }
+
+    function upload() {
+        const formData = new FormData();
+        // files = [];
+        // files = filesToUpload;
+        // console.log(files);
+
+        // for (let i = 0; i < files.length; i++) {
+        formData.append('sriram',filesToUpload);
+        // }
+        // console.log('form data variable :   ' + formData.toString());
+        // this.http.post('http://localhost:3003/upload', formData)
+        //     .map(files => files.json())
+        //     .subscribe(files => console.log('files', files))
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res, err) {
+                if (res) {
+                    img = res;
+                    console.log(res, "myres2");
+                }
+                if (err) {
+                    console.log(err, "myerr2");
+                }
+            }
+        })
+
+
+        // const formData1 = new FormData();
+        // files1 = [];
+        // files1 = filesToUpload1;
+        // console.log(files1);
+
+        // for (let i = 0; i < files1.length; i++) {
+        //     formData1.append("uploads[]", files1[i], files1[i]['name']);
+        // }
+        // console.log('form data variable :   ' + formData1.toString());
+        // // this.http.post('http://localhost:3003/upload', formData)
+        // //     .map(files => files.json())
+        // //     .subscribe(files => console.log('files', files))
+
+        // let url1 = "http://localhost:3000/upload1";
+        // $.ajax({
+        //     type: "POST",
+        //     url: url1,
+        //     data: formData1,
+        //     processData: false,
+        //     contentType: false,
+        //     success: function (res, err) {
+        //         if (res) {
+        //             img = res;
+        //             console.log(res, "myres2");
+        //         }
+        //         if (err) {
+        //             console.log(err, "myerr2");
+        //         }
+        //     }
+        // })
+    }
+//  $('.uploadImage').submit(function(e){
+
+//     e.preventDefault();
+
+//     var title = $('#title').val(); 
+
+//     $(this).ajaxSubmit({
+//       data: {title: title},
+//       contentType: 'application/json',
+//       success: function(response){
+//         console.log('image uploaded and form submitted');     
+//       }
+//   });
+//     return false;
+// });
+</script>
